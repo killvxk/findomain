@@ -1,0 +1,153 @@
+name: findomain
+version: "0.9.3"
+author: Eduard Tolosa <edu4rdshl@protonmail.com>
+settings:
+    - ArgRequiredElseHelp
+    - StrictUtf8
+about: The fastest and cross-platform subdomain enumerator, don't waste your time.
+args:
+    - target:
+        short: t
+        long: target
+        help: Target host.
+        takes_value: true
+        multiple: false
+        conflicts_with:
+          - file
+
+    - resolved:
+        short: r
+        long: resolved
+        help: Show/write only resolved subdomains.
+        takes_value: false
+        conflicts_with:
+          - monitoring-flag
+          - ip
+          - ipv4-only
+          - ipv6-only
+
+    - ip:
+        short: i
+        long: ip
+        help: Show/write the ip address of resolved subdomains.
+        takes_value: false
+        conflicts_with:
+          - monitoring-flag
+          - resolved
+          - ipv4-only
+          - ipv6-only
+
+    - file:
+        short: f
+        long: file
+        help: Use a list of subdomains writen in a file as input.
+        takes_value: true
+        multiple: false
+        conflicts_with:
+          - target
+
+    - output:
+        short: o
+        long: output
+        help: Write to an output file. The name of the output file will be the target string with TXT format.
+        takes_value: false
+
+    - unique-output:
+        short: u
+        long: unique-output
+        help: Write all the results for a target or a list of targets to a specified filename.
+        takes_value: true
+        multiple: false
+        conflicts_with:
+          - output
+          - monitoring-flag
+
+    - monitoring-flag:
+        short: m
+        long: monitoring-flag
+        help: Activate Findomain monitoring mode.
+        takes_value: false
+
+    - postgres-user:
+        long: postgres-user
+        help: Postgresql username.
+        takes_value: true
+
+    - postgres-password:
+        long: postgres-password
+        help: Postgresql password.
+        takes_value: true
+
+    - postgres-host:
+        long: postgres-host
+        help: Postgresql host.
+        takes_value: true
+
+    - postgres-port:
+        long: postgres-port
+        help: Postgresql port.
+        takes_value: true
+
+    - postgres-database:
+        long: postgres-database
+        help: Postgresql database.
+        takes_value: true
+
+    - quiet:
+        short: q
+        long: quiet
+        help: Remove informative messages but show fatal errors or subdomains not found message.
+        takes_value: false
+
+    - query-database:
+        long: query-database
+        help: Query the findomain database to search subdomains that have already been discovered.
+        takes_value: false
+        conflicts_with:
+          - monitoring-flag
+
+    - import-subdomains:
+        help: Import subdomains from one or multiple files. Subdomains need to be one per line in the file to import.
+        long: import-subdomains
+        takes_value: true
+        multiple: true
+        requires:
+          - monitoring-flag
+
+    - enable-dot:
+        help: Enable DNS over TLS for resolving subdomains IPs.
+        long: enable-dot
+        takes_value: false
+
+    - ipv4-only:
+        help: Perform a IPv4 lookup only.
+        long: ipv4-only
+        takes_value: false
+        conflicts_with:
+          - monitoring-flag
+          - ipv6-only
+          - ip
+          - resolved
+
+    - ipv6-only:
+        help: Perform a IPv6 lookup only.
+        long: ipv6-only
+        takes_value: false
+        conflicts_with:
+          - monitoring-flag
+          - ipv4-only
+          - ip
+          - resolved
+
+    - threads:
+        help: Number of threads to use to perform subdomains resolution.
+        long: threads
+        takes_value: true
+
+    - resolver:
+        help: Specify a resolver to use.
+        long: resolver
+        takes_value: true
+        possible_values:
+          - cloudflare
+          - quad9
